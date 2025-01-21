@@ -1,0 +1,43 @@
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        number = 0#final value
+        lst = []#
+        for i in range(len(s)):#adds every character into a list
+            char = s[i]
+            if char == "I":
+                lst.append(1) 
+            if char == "V":
+                lst.append(5)
+            if char == "X":
+                lst.append(10)
+            if char == "L":
+                lst.append(50)
+            if char == "C":
+                lst.append(100)
+            if char == "D":
+                lst.append(500)
+            if char == "M":
+                lst.append(1000)
+        print(lst)
+
+        dontSkip = 0#conditional to skip lines if subtracting
+        for i in range(0,len(lst)):
+            if dontSkip%3!=0:
+                dontSkip-=1
+                continue#ignores lines already factored in
+            print(i)
+            num = lst[i]#current number
+            #try used for final number incase out of bounds error
+            try:
+                 next = lst[i+1]#next number
+            except:
+                 number+=num
+                 break
+            if num >= next:
+                number += num        
+            else:        
+                number += next-num
+                dontSkip = 4 
+            print("number:" + str(number))
+        #print(number)
+        return number   
