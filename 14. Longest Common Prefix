@@ -1,0 +1,44 @@
+class Solution(object):
+
+    def longestCommonPrefix(self, strs):
+        def getRange(prefix, word):
+            length = 0
+            if len(prefix) < len(word):
+                length = len(prefix)
+            else:
+                length = len(word)
+            return length    
+        def isMatch(prefix, word):
+            match = True
+            length = getRange(prefix, word)
+
+            for i in range(length):
+                if prefix[i] != word[i]:
+                    match = False
+            return match
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        prefix = strs[0]
+
+        for word in strs:
+            #if match and word is shorter
+            if isMatch(prefix, word) == True:
+                if len(word) < len(prefix):
+                    prefix = word
+            else:
+                newRange = 0
+                newPrefix = ""
+                for i in range(getRange(prefix, word)):
+                    
+                    if prefix[i] != word[i]:
+                        newRange = i
+                        #no prefix
+                        if i == 0:
+                            return ""
+                        break
+                for j in range(newRange):
+                    newPrefix += prefix[j]
+                prefix = newPrefix
+        return prefix
